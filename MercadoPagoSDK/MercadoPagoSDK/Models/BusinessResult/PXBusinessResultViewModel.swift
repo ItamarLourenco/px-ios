@@ -19,7 +19,6 @@ class PXBusinessResultViewModel: NSObject {
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
-    private lazy var approvedIconBundle = ResourceManager.shared.getBundle()
 
     init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper, pointsAndDiscounts: PXPointsAndDiscounts?) {
         self.businessResult = businessResult
@@ -27,6 +26,11 @@ class PXBusinessResultViewModel: NSObject {
         self.amountHelper = amountHelper
         self.pointsAndDiscounts = pointsAndDiscounts
         super.init()
+    }
+
+    func getPaymentId() -> String? {
+        guard let firstPaymentId = businessResult.getReceiptIdList()?.first  else { return businessResult.getReceiptId() }
+        return firstPaymentId
     }
 
     func primaryResultColor() -> UIColor {
